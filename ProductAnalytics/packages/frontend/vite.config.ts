@@ -48,9 +48,41 @@ const localNetworkAccessPlugin: PluginOption = {
   },
 };
 
+// Rayfin entities (e.g. rayfin/connectors/**) use TC39 stage-3 decorators with
+// decorator metadata. Under Vite 8 the production build hands TS to Oxc, which
+// does not lower standard decorators, so `@entity()` reaches the bundle verbatim
+// and the browser fails to parse it. Compile decorated .ts files with SWC's
+// 2023-11 decorator transform instead; everything else stays on Oxc.
+const stage3DecoratorsPlugin: PluginOption = {
+  name: 'rayfin-stage3-decorators',
+  enforce: 'pre',
+  async transform(code, id) {
+    const file = id.split('?')[0];
+    if (!/\.m?ts$/.test(file) || file.includes('/node_modules/')) return;
+    if (!/^\s*@\w/m.test(code)) return;
+    const { transform } = await import('@swc/core');
+    const result = await transform(code, {
+      filename: file,
+      swcrc: false,
+      configFile: false,
+      sourceMaps: true,
+      jsc: {
+        target: 'es2022',
+        parser: { syntax: 'typescript', decorators: true },
+        transform: {
+          decoratorVersion: '2023-11',
+          useDefineForClassFields: true,
+        },
+      },
+    });
+    return { code: result.code, map: result.map };
+  },
+};
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    stage3DecoratorsPlugin,
     react(),
     tailwindcss(),
     rayfinLocalDev({ autoLogin: true, sourceActivity: true }),

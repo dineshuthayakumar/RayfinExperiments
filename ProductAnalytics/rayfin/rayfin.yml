@@ -30,3 +30,13 @@ services:
     enabled: false
   functions:
     enabled: false
+connectors:
+  - name: productlakehouse
+    type: fabric-sqlanalytics
+    config:
+      workspaceId: c610f482-ec06-43ad-9174-2e83b8e8ec20
+      itemId: 7e76fd31-a7cd-4a02-a40e-1a65d56252fe
+    auth:
+      type: application
+    operations:
+      - name: read

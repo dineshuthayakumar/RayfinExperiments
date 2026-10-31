@@ -5,6 +5,22 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Root } from './Root';
 import type { AuthConfig, IAuthService } from './services/rayfin-auth.service';
 
+// The dashboard loads Product rows once signed in; these specs cover only the
+// auth gate, so keep the Lakehouse read pending instead of hitting the network.
+vi.mock('@/lib/rayfin-client', () => {
+  const builder = {
+    orderBy: () => builder,
+    first: () => builder,
+    after: () => builder,
+    executePaginated: () => new Promise(() => {}),
+  };
+  return {
+    getRayfinClient: async () => ({
+      connectors: { productlakehouse: { Product: { select: () => builder } } },
+    }),
+  };
+});
+
 const authenticated: OpaqueSession = {
   user: null,
   isAuthenticated: true,
@@ -43,7 +59,7 @@ describe('protected app content with standalone sign-in', () => {
     );
     render(<Root rayfinAuthService={auth} />);
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
     expect(screen.getByText('Connecting to Fabric…')).toBeVisible();
   });
@@ -54,7 +70,7 @@ describe('protected app content with standalone sign-in', () => {
       await screen.findByRole('button', { name: 'Sign in with Microsoft' })
     ).toBeVisible();
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
     expect(screen.queryByText(/outside Fabric/)).toBeNull();
   });
@@ -64,7 +80,7 @@ describe('protected app content with standalone sign-in', () => {
     auth.resolveSession = vi.fn(async () => authenticated);
     render(<Root rayfinAuthService={auth} />);
     expect(
-      await screen.findByRole('heading', { name: 'Product performance overview' })
+      await screen.findByRole('heading', { name: 'Product catalog overview' })
     ).toBeVisible();
     expect(auth.signIn).not.toHaveBeenCalled();
   });
@@ -80,7 +96,7 @@ describe('protected app content with standalone sign-in', () => {
       await screen.findByRole('button', { name: 'Sign in with Microsoft' })
     ).toBeVisible();
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
   });
 
@@ -94,12 +110,12 @@ describe('protected app content with standalone sign-in', () => {
       name: 'Try Sign in with Microsoft',
     });
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
     await act(async () => fireEvent.click(button));
     expect(auth.signIn).toHaveBeenCalledTimes(1);
     expect(
-      await screen.findByRole('heading', { name: 'Product performance overview' })
+      await screen.findByRole('heading', { name: 'Product catalog overview' })
     ).toBeVisible();
   });
 
@@ -117,7 +133,7 @@ describe('protected app content with standalone sign-in', () => {
       'Sign-in was cancelled.'
     );
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
   });
 
@@ -132,14 +148,14 @@ describe('protected app content with standalone sign-in', () => {
     });
     render(<Root rayfinAuthService={auth} />);
     expect(
-      await screen.findByRole('heading', { name: 'Product performance overview' })
+      await screen.findByRole('heading', { name: 'Product catalog overview' })
     ).toBeVisible();
     await act(async () => notify?.(null));
     expect(
       await screen.findByRole('button', { name: 'Sign in with Microsoft' })
     ).toBeVisible();
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
     expect(unsubscribe).toHaveBeenCalled();
   });
@@ -151,7 +167,7 @@ describe('protected app content with standalone sign-in', () => {
   ])('fails closed for $kind configuration', async (config) => {
     await act(async () => render(<Root rayfinAuthService={service(config)} />));
     expect(
-      screen.queryByRole('heading', { name: 'Product performance overview' })
+      screen.queryByRole('heading', { name: 'Product catalog overview' })
     ).toBeNull();
     expect(
       screen.queryByRole('button', { name: 'Sign in with Microsoft' })
