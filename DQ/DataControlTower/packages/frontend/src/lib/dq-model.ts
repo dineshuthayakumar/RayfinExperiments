@@ -50,8 +50,8 @@ export type DimensionRow = {
   description: string | null;
 };
 
-/** Failed rule results in the recent window, grouped by rule. */
-export type RuleFailureRow = { ruleId: number; failures: number };
+/** Passed and failed rule results in the recent window, grouped by rule. */
+export type RuleFailureRow = { ruleId: number; failures: number; successes?: number };
 
 // ---------------------------------------------------------------------------
 // Wire coercion. DAB may return decimals, booleans and dates as strings.
@@ -134,6 +134,8 @@ export type DimensionCoverage = {
   critical: number;
   /** Failed rule results in the recent window; null when unavailable. */
   failures: number | null;
+  /** Passed rule results in the recent window; null when unavailable. */
+  successes: number | null;
 };
 
 export function passRate(passed: number, total: number): number | null {
@@ -360,11 +362,13 @@ export function buildDimensionCoverage(
 ): DimensionCoverage[] {
   const ruleDimension = new Map(rules.map((r) => [r.ruleId, r.dimensionId]));
   const failuresByDimension = new Map<number, number>();
+  const successesByDimension = new Map<number, number>();
   if (failures) {
     for (const f of failures) {
       const dim = ruleDimension.get(f.ruleId);
       if (dim === undefined) continue;
       failuresByDimension.set(dim, (failuresByDimension.get(dim) ?? 0) + f.failures);
+      successesByDimension.set(dim, (successesByDimension.get(dim) ?? 0) + (f.successes ?? 0));
     }
   }
 
@@ -377,6 +381,7 @@ export function buildDimensionCoverage(
         rules: dimRules.length,
         critical: dimRules.filter((r) => r.isCritical).length,
         failures: failures ? (failuresByDimension.get(dimension.dimensionId) ?? 0) : null,
+        successes: failures ? (successesByDimension.get(dimension.dimensionId) ?? 0) : null,
       };
     });
 }

@@ -3,7 +3,44 @@ import { formatCompact, formatDuration, formatInt, formatRelative } from '@/lib/
 
 import { EmptyNote, RunStatusBadge } from './primitives';
 
-/** Rules and recent failures per DQ dimension. Bars share one scale (failures). */
+/** Stacked pass (green) / fail (red) split of rule checks for one dimension. */
+function ResultBar({ successes, failures }: { successes: number | null; failures: number | null }) {
+  const pass = successes ?? 0;
+  const fail = failures ?? 0;
+  const total = pass + fail;
+  const known = successes !== null || failures !== null;
+  const passPct = total > 0 ? (pass / total) * 100 : 0;
+  const failPct = total > 0 ? (fail / total) * 100 : 0;
+
+  return (
+    <div className="flex flex-col gap-100">
+      <div
+        className="flex h-200 w-full overflow-hidden rounded-full bg-muted"
+        role="img"
+        aria-label={known ? `${pass} passed, ${fail} failed` : 'Results unavailable'}
+      >
+        {passPct > 0 && (
+          <div className="h-full bg-good" style={{ width: `${passPct}%` }} title={`${formatInt(pass)} passed`} />
+        )}
+        {failPct > 0 && (
+          <div className="h-full bg-critical" style={{ width: `${failPct}%` }} title={`${formatInt(fail)} failed`} />
+        )}
+      </div>
+      <div className="flex justify-between font-numeric text-200 text-muted-foreground">
+        <span>
+          <span className="mr-100 inline-block size-100 rounded-full bg-good" aria-hidden />
+          {known ? formatCompact(pass) : '—'} passed
+        </span>
+        <span>
+          <span className="mr-100 inline-block size-100 rounded-full bg-critical" aria-hidden />
+          {known ? formatCompact(fail) : '—'} failed
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** Rules and recent pass/fail results per DQ dimension. */
 export function DimensionList({
   coverage,
   failureWindowDays,
@@ -11,7 +48,6 @@ export function DimensionList({
   coverage: DimensionCoverage[];
   failureWindowDays: number;
 }) {
-  const maxFailures = Math.max(0, ...coverage.map((c) => c.failures ?? 0));
   const failuresKnown = coverage.some((c) => c.failures !== null);
 
   return (
@@ -33,26 +69,14 @@ export function DimensionList({
                 )}
               </span>
             </div>
-            <div className="flex items-center gap-200">
-              <div className="h-200 flex-1 overflow-hidden rounded-full bg-muted">
-                {maxFailures > 0 && (c.failures ?? 0) > 0 && (
-                  <div
-                    className="h-full rounded-full bg-brand"
-                    style={{ width: `${((c.failures ?? 0) / maxFailures) * 100}%` }}
-                  />
-                )}
-              </div>
-              <span className="w-800 text-right font-numeric text-200 text-muted-foreground">
-                {c.failures === null ? '—' : formatCompact(c.failures)}
-              </span>
-            </div>
+            <ResultBar successes={c.successes} failures={c.failures} />
           </li>
         ))}
       </ul>
       <p className="text-200 text-muted-foreground">
         {failuresKnown
-          ? `Bars show failed rule checks over the last ${failureWindowDays} days.`
-          : 'Failure counts are unavailable right now.'}
+          ? `Bars show passed vs failed rule checks over the last ${failureWindowDays} days.`
+          : 'Result counts are unavailable right now.'}
       </p>
     </div>
   );

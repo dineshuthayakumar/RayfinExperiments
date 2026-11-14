@@ -163,23 +163,29 @@ async function loadDimensions(dq: Connector): Promise<DimensionRow[]> {
   }));
 }
 
-/** Failed rule results over the recent window, counted server-side per rule. */
+/** Passed and failed rule results over the recent window, counted server-side per rule. */
 async function loadFailures(dq: Connector): Promise<RuleFailureRow[]> {
   const since = new Date();
   since.setHours(0, 0, 0, 0);
   since.setDate(since.getDate() - (FAILURE_WINDOW_DAYS - 1));
 
   const rows = await dq.DqRuleResult.where({
-    isPassed: { eq: false },
     evaluationDate: { gte: since },
   })
-    .groupBy(['ruleId'])
-    .aggregate({ failures: { count: 'ruleId' } })
+    .groupBy(['ruleId', 'isPassed'])
+    .aggregate({ results: { count: 'ruleId' } })
     .execute();
-  return rows.map((r) => ({
-    ruleId: toNumber(r.fields.ruleId) ?? 0,
-    failures: toNumber(r.aggregations.failures) ?? 0,
-  }));
+
+  const byRule = new Map<number, Required<RuleFailureRow>>();
+  for (const r of rows) {
+    const ruleId = toNumber(r.fields.ruleId) ?? 0;
+    const count = toNumber(r.aggregations.results) ?? 0;
+    const entry = byRule.get(ruleId) ?? { ruleId, failures: 0, successes: 0 };
+    if (toBool(r.fields.isPassed)) entry.successes += count;
+    else entry.failures += count;
+    byRule.set(ruleId, entry);
+  }
+  return [...byRule.values()];
 }
 
 function toMessage(error: unknown, fallback: string): string {
