@@ -115,10 +115,8 @@
 
   /* Font Families
      Usage: font-* (e.g. font-heading, font-base) */
-  --font-heading:
-    'IBM Plex Sans Condensed', 'IBM Plex Sans', 'Segoe UI', sans-serif; /* headings, titles */
-  --font-base:
-    'IBM Plex Sans', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; /* body text, labels, UI controls */
+  --font-heading: 'Source Serif 4', serif; /* headings, titles */
+  --font-base: 'Source Serif 4', serif; /* body text, labels, UI controls */
   --font-monospace:
     'IBM Plex Mono', Consolas, 'Courier New', monospace; /* code, ids, pre-formatted text */
   --font-numeric:
@@ -187,6 +185,7 @@
 
   body {
     @apply bg-background text-foreground antialiased font-base;
+    font-weight: 400;
   }
 
   select,
