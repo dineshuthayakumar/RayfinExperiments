@@ -1,0 +1,842 @@
+{
+  "source": "dqlakehouse",
+  "connector": "fabric-sqlanalytics",
+  "connectionString": "d6ytlceezvgufbixj7lhld654m-ql2bbrqg5swuheluf2b3r2hmea.datawarehouse.fabric.microsoft.com",
+  "discoveredAt": "2026-11-14T06:39:53.929Z",
+  "schemas": [
+    {
+      "schemaName": "dbo",
+      "tables": [
+        {
+          "tableName": "Category",
+          "columns": [
+            {
+              "columnName": "ID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "CreatedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "ModifiedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "CreatedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "ModifiedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "ParentCategoryID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "DisplayOrder",
+              "dataType": "int",
+              "isNullable": true,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "StatusID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "OwnerID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "URLSlug",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Description",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            }
+          ]
+        },
+        {
+          "tableName": "Product",
+          "columns": [
+            {
+              "columnName": "ID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "SKU",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Description",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Price",
+              "dataType": "decimal",
+              "isNullable": true,
+              "precision": 34,
+              "scale": 6
+            },
+            {
+              "columnName": "StockQuantity",
+              "dataType": "int",
+              "isNullable": true,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "ReorderLevel",
+              "dataType": "int",
+              "isNullable": true,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "CreatedDate",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "ModifiedDate",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "IsActive",
+              "dataType": "bit",
+              "isNullable": true
+            },
+            {
+              "columnName": "CreatedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "ModifiedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "CreatedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "ModifiedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "StatusID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "OwnerID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "URLSlug",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            }
+          ]
+        },
+        {
+          "tableName": "ProductCategory",
+          "columns": [
+            {
+              "columnName": "ID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "CreatedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "ModifiedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "CreatedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "ModifiedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Product",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Category",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "StatusID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "OwnerID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            }
+          ]
+        },
+        {
+          "tableName": "ProductProperty",
+          "columns": [
+            {
+              "columnName": "ID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "CreatedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "ModifiedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "CreatedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "ModifiedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "StatusID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "OwnerID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Product",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Property",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Value",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "DisplayOrder",
+              "dataType": "int",
+              "isNullable": true,
+              "precision": 10,
+              "scale": 0
+            }
+          ]
+        },
+        {
+          "tableName": "Property",
+          "columns": [
+            {
+              "columnName": "ID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "CreatedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "ModifiedOn",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "CreatedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "ModifiedByID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "StatusID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "OwnerID",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "Description",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "dq",
+      "tables": [
+        {
+          "tableName": "dq_dimension",
+          "columns": [
+            {
+              "columnName": "dimension_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "dimension_name",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "description",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            }
+          ]
+        },
+        {
+          "tableName": "dq_record_score",
+          "columns": [
+            {
+              "columnName": "record_score_id",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "run_id",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "table_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "record_key",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "record_key_hash",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "dq_score",
+              "dataType": "decimal",
+              "isNullable": false,
+              "precision": 5,
+              "scale": 2
+            },
+            {
+              "columnName": "dq_status",
+              "dataType": "bit",
+              "isNullable": false
+            },
+            {
+              "columnName": "rules_evaluated",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "rules_failed",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "critical_failure",
+              "dataType": "bit",
+              "isNullable": false
+            },
+            {
+              "columnName": "is_current",
+              "dataType": "bit",
+              "isNullable": false
+            },
+            {
+              "columnName": "evaluation_date",
+              "dataType": "date",
+              "isNullable": false,
+              "datePrecision": 0
+            },
+            {
+              "columnName": "evaluated_ts",
+              "dataType": "datetime2",
+              "isNullable": false,
+              "datePrecision": 6
+            }
+          ]
+        },
+        {
+          "tableName": "dq_rule",
+          "columns": [
+            {
+              "columnName": "rule_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "table_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "dimension_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "rule_name",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "column_name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "rule_expression",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "weight",
+              "dataType": "decimal",
+              "isNullable": false,
+              "precision": 9,
+              "scale": 4
+            },
+            {
+              "columnName": "severity",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "is_critical",
+              "dataType": "bit",
+              "isNullable": false
+            },
+            {
+              "columnName": "rule_version",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "effective_from",
+              "dataType": "date",
+              "isNullable": false,
+              "datePrecision": 0
+            },
+            {
+              "columnName": "effective_to",
+              "dataType": "date",
+              "isNullable": true,
+              "datePrecision": 0
+            },
+            {
+              "columnName": "is_active",
+              "dataType": "bit",
+              "isNullable": false
+            }
+          ]
+        },
+        {
+          "tableName": "dq_rule_result",
+          "columns": [
+            {
+              "columnName": "run_id",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "table_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "record_key_hash",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "rule_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "is_passed",
+              "dataType": "bit",
+              "isNullable": false
+            },
+            {
+              "columnName": "rule_score",
+              "dataType": "decimal",
+              "isNullable": true,
+              "precision": 9,
+              "scale": 4
+            },
+            {
+              "columnName": "failed_value",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "failure_reason",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "evaluation_date",
+              "dataType": "date",
+              "isNullable": false,
+              "datePrecision": 0
+            }
+          ]
+        },
+        {
+          "tableName": "dq_run",
+          "columns": [
+            {
+              "columnName": "run_id",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "table_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "pipeline_name",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "pipeline_run_id",
+              "dataType": "varchar",
+              "isNullable": true,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "run_start_ts",
+              "dataType": "datetime2",
+              "isNullable": false,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "run_end_ts",
+              "dataType": "datetime2",
+              "isNullable": true,
+              "datePrecision": 6
+            },
+            {
+              "columnName": "run_status",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "records_evaluated",
+              "dataType": "bigint",
+              "isNullable": true,
+              "precision": 19,
+              "scale": 0
+            }
+          ]
+        },
+        {
+          "tableName": "dq_source_table",
+          "columns": [
+            {
+              "columnName": "table_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "workspace_name",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "lakehouse_name",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "schema_name",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "table_name",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "layer",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "business_key_columns",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "pass_threshold",
+              "dataType": "decimal",
+              "isNullable": false,
+              "precision": 5,
+              "scale": 2
+            },
+            {
+              "columnName": "is_active",
+              "dataType": "bit",
+              "isNullable": false
+            },
+            {
+              "columnName": "created_ts",
+              "dataType": "datetime2",
+              "isNullable": false,
+              "datePrecision": 6
+            }
+          ]
+        },
+        {
+          "tableName": "dq_table_summary",
+          "columns": [
+            {
+              "columnName": "run_id",
+              "dataType": "varchar",
+              "isNullable": false,
+              "maxLength": 8000
+            },
+            {
+              "columnName": "table_id",
+              "dataType": "int",
+              "isNullable": false,
+              "precision": 10,
+              "scale": 0
+            },
+            {
+              "columnName": "total_records",
+              "dataType": "bigint",
+              "isNullable": false,
+              "precision": 19,
+              "scale": 0
+            },
+            {
+              "columnName": "passed_records",
+              "dataType": "bigint",
+              "isNullable": false,
+              "precision": 19,
+              "scale": 0
+            },
+            {
+              "columnName": "failed_records",
+              "dataType": "bigint",
+              "isNullable": false,
+              "precision": 19,
+              "scale": 0
+            },
+            {
+              "columnName": "avg_dq_score",
+              "dataType": "decimal",
+              "isNullable": true,
+              "precision": 5,
+              "scale": 2
+            },
+            {
+              "columnName": "pass_rate_pct",
+              "dataType": "decimal",
+              "isNullable": true,
+              "precision": 5,
+              "scale": 2
+            },
+            {
+              "columnName": "summary_ts",
+              "dataType": "datetime2",
+              "isNullable": false,
+              "datePrecision": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

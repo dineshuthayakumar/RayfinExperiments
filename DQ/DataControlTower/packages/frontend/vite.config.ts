@@ -8,7 +8,7 @@
 import react from '@vitejs/plugin-react';
 import { rayfinLocalDev } from '@microsoft/rayfin-local-dev/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig, type PluginOption } from 'vite';
+import { defineConfig, transformWithEsbuild, type PluginOption } from 'vite';
 import license from 'rollup-plugin-license';
 
 import { resolve } from 'path';
@@ -48,12 +48,33 @@ const localNetworkAccessPlugin: PluginOption = {
   },
 };
 
+// Vite 8 compiles TS with Oxc, which does not lower TC39 Stage 3 decorators
+// (used by Rayfin entities such as rayfin/connectors/**). Left as-is, raw
+// `@entity()` syntax ends up in the bundle and browsers can't parse it.
+// Pre-transform decorator-bearing TS files with esbuild so they're lowered.
+const lowerDecoratorsPlugin: PluginOption = {
+  name: 'rayfin-lower-tc39-decorators',
+  enforce: 'pre',
+  async transform(code, id) {
+    if (!/\.tsx?$/.test(id) || id.includes('node_modules')) return null;
+    if (!/^\s*@[A-Za-z_$]/m.test(code)) return null;
+    const result = await transformWithEsbuild(code, id, {
+      loader: id.endsWith('x') ? 'tsx' : 'ts',
+      target: 'es2022',
+      jsx: 'automatic',
+      sourcemap: true,
+    });
+    return { code: result.code, map: result.map };
+  },
+};
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    lowerDecoratorsPlugin,
     react(),
     tailwindcss(),
-    rayfinLocalDev({ autoLogin: true, sourceActivity: true }),
+    rayfinLocalDev({ autoLogin: true }),
     localNetworkAccessPlugin,
   ],
   resolve: {
@@ -65,7 +86,18 @@ export default defineConfig({
     // a second dispatcher and fail hooks at runtime.
     dedupe: ['react', 'react-dom'],
   },
+  // Rayfin entities use TC39 Stage 3 decorators; an ES2022 target makes the
+  // transformer lower them instead of emitting raw `@decorator` syntax.
+  esbuild: {
+    target: 'es2022',
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2022',
+    },
+  },
   build: {
+    target: 'es2022',
     commonjsOptions: {
       include: [/node_modules/],
     },

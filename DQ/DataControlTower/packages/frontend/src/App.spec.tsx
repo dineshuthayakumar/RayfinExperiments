@@ -5,16 +5,17 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 
-// The welcome view polls a dev-only activity endpoint via `useSourceActivity`.
-// In this smoke test there is no dev server, so stub the hook to return no feed:
-// the view renders its illustrative state synchronously and nothing settles after
-// the test (which would otherwise log a React `act(...)` warning).
-vi.mock('./Welcome.activity', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('./Welcome.activity')>();
-  return { ...actual, useSourceActivity: () => null };
+// The DQ home page reads the live connector; keep it in its loading state here
+// so these tests stay focused on the auth boundary.
+vi.mock('@/hooks/use-dq-summary', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/hooks/use-dq-summary')>();
+  return {
+    ...actual,
+    useDqSummary: () => ({ state: { status: 'loading' }, reload: () => {}, refreshing: true }),
+  };
 });
 
 import App from '@/App';
@@ -24,8 +25,11 @@ describe('App', () => {
     expect(() => render(<App />)).not.toThrow();
   });
 
-  it('mounts content into the document', () => {
+  it('shows the data quality summary heading while loading', () => {
     render(<App />);
-    expect(document.body).not.toBeEmptyDOMElement();
+    expect(
+      screen.getByRole('heading', { name: 'Data quality summary' })
+    ).toBeVisible();
+    expect(screen.getByLabelText('Loading data quality summary')).toBeVisible();
   });
 });
