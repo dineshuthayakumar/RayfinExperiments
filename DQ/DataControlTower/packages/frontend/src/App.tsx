@@ -5,10 +5,16 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+import { TopNav } from './components/top-nav.component';
 import { DqHome } from './home/DqHome';
 
 function App() {
-  return <DqHome />;
+  return (
+    <>
+      <TopNav />
+      <DqHome />
+    </>
+  );
 }
 
 export default App;

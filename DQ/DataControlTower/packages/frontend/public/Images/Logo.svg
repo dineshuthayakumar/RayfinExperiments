@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="232" height="32" viewBox="0 0 232 32" role="img" aria-label="Data Control Tower">
+  <title>Data Control Tower</title>
+  <!-- Placeholder wordmark. Replace this file with the brand asset; keep the
+       name and the 32px height so the nav layout is unchanged. Colors are
+       literal (not currentColor) because an <img>-loaded SVG does not inherit
+       the host document's color or fonts. -->
+  <g fill="none" stroke="#4fbac4" stroke-width="1.5">
+    <circle cx="16" cy="16" r="13" stroke-opacity="0.35" />
+    <circle cx="16" cy="16" r="7.5" stroke-opacity="0.6" />
+  </g>
+  <path d="M16 3.5 L16 28.5" stroke="#4fbac4" stroke-width="1.5" stroke-opacity="0.35" />
+  <path d="M16 16 L25.5 8" stroke="#8fe3ea" stroke-width="2" stroke-linecap="round" />
+  <circle cx="16" cy="16" r="2.75" fill="#ecebe6" />
+  <text x="42" y="22"
+        font-family="'IBM Plex Sans Condensed','Segoe UI Semibold','Segoe UI',Arial,sans-serif"
+        font-size="17" font-weight="700" letter-spacing="0.6" fill="#ecebe6">DATA</text>
+  <text x="97" y="22"
+        font-family="'IBM Plex Sans Condensed','Segoe UI','Segoe UI',Arial,sans-serif"
+        font-size="17" font-weight="500" letter-spacing="0.6" fill="#8fe3ea">CONTROL TOWER</text>
+</svg>
